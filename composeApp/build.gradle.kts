@@ -7,7 +7,11 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
+
 
 kotlin {
     androidTarget {
@@ -29,10 +33,20 @@ kotlin {
     }
     
     sourceSets {
-        
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.material3.android)
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.kotlinx.coroutines.android)
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
+           // implementation(libs.androidx.core.splashscreen)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -43,6 +57,11 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+
+            implementation(libs.lifecycle.viewmodel.compose)
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.bundles.ktor)
         }
     }
 }
@@ -76,5 +95,9 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 

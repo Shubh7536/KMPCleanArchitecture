@@ -10,6 +10,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.shubham.kmpcleanarchi.core.presentation.utils.getKoinViewModel
+import com.shubham.kmpcleanarchi.core.presentation.viewmodels.MyViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -20,6 +22,13 @@ import kmpcleanarchitecture.composeapp.generated.resources.compose_multiplatform
 @Preview
 fun App() {
     MaterialTheme {
+
+        val myViewModel = getKoinViewModel<MyViewModel>()
+
+        LaunchedEffect(Unit){
+            myViewModel.getHarryPotterChar()
+        }
+
         var showContent by remember { mutableStateOf(false) }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(onClick = { showContent = !showContent }) {
