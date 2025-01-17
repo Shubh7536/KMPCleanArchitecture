@@ -17,30 +17,33 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import kmpcleanarchitecture.composeapp.generated.resources.Res
 import kmpcleanarchitecture.composeapp.generated.resources.compose_multiplatform
+import org.koin.compose.KoinContext
 
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    KoinContext {
+        MaterialTheme {
+            val myViewModel = getKoinViewModel<MyViewModel>()
 
-        val myViewModel = getKoinViewModel<MyViewModel>()
-
-        LaunchedEffect(Unit){
-            myViewModel.getHarryPotterChar()
-        }
-
-        var showContent by remember { mutableStateOf(false) }
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+            LaunchedEffect(Unit){
+                myViewModel.getHarryPotterChar()
             }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+
+            var showContent by remember { mutableStateOf(false) }
+            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                Button(onClick = { showContent = !showContent }) {
+                    Text("Click me!")
+                }
+                AnimatedVisibility(showContent) {
+                    val greeting = remember { Greeting().greet() }
+                    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Image(painterResource(Res.drawable.compose_multiplatform), null)
+                        Text("Compose: $greeting")
+                    }
                 }
             }
         }
     }
+
 }
